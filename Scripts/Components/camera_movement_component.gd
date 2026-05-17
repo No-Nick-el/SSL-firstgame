@@ -4,23 +4,19 @@ class_name CameraMovementComponent extends Node
 @export var BODY:CharacterBody3D
 @export var CAMERA_CONTROLLER:CameraController
 @export var MOUSE_CAPTURE_COMPONENT:MouseCaptureComponent
-@export_category("Camera Settings")
-@export var sensitivity:float = 0.05
-@export_group("Camera Tilt")
-@export_range(-90, -60) var lowerTiltLimit:int = -90
-@export_range(60, 90) var upperTiltLimit:int = -90
+
 
 var rotation := Vector2.ZERO
 
 var playerRotation:Vector3
 var cameraRotation:Vector3
 
-func update_camera_rotation(delta) -> void:
+func update_camera_rotation(delta, sensitivity:float, lowerTiltLimit:float, upperTiltLimit:float) -> void:
 	if !(BODY and CAMERA_CONTROLLER and MOUSE_CAPTURE_COMPONENT):
 		return
 	
-	rotation.x += MOUSE_CAPTURE_COMPONENT.mouseInput.y * delta
-	rotation.y += MOUSE_CAPTURE_COMPONENT.mouseInput.x * delta
+	rotation.x += MOUSE_CAPTURE_COMPONENT.mouseInput.y * delta * sensitivity
+	rotation.y += MOUSE_CAPTURE_COMPONENT.mouseInput.x * delta * sensitivity
 	rotation.x = clamp(rotation.x, deg_to_rad(lowerTiltLimit), deg_to_rad(upperTiltLimit))
 	
 	playerRotation = Vector3(0, rotation.y, 0)

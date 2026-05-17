@@ -6,6 +6,12 @@
 [ext_resource type="Script" uid="uid://c0rtbfn4ctgib" path="res://Scripts/Entities/Player/camera_controller.gd" id="2_fcpig"]
 [ext_resource type="Script" uid="uid://b2xijy6y8gqkp" path="res://Scripts/Components/camera_movement_component.gd" id="5_y6hyn"]
 [ext_resource type="Script" uid="uid://cmk3t07626wdj" path="res://Scripts/Components/mouse_capture_component.gd" id="6_y6hyn"]
+[ext_resource type="Script" uid="uid://dh2xregh2rxqo" path="res://Scripts/StateMachine/PlayerStateMachine/player_state_machine.gd" id="7_75l7y"]
+[ext_resource type="Script" uid="uid://8vvjh3ieyo7o" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/movement_state_machine.gd" id="8_5o8lj"]
+[ext_resource type="Script" uid="uid://5hb20klwvs4r" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Moving/moving.gd" id="9_i4twt"]
+[ext_resource type="Script" uid="uid://cfbfhg47401l5" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Moving/Grounded/grounded.gd" id="10_q8fdp"]
+[ext_resource type="Script" uid="uid://dulq8ku4v3585" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Moving/Grounded/Walking/walking.gd" id="11_0yfgq"]
+[ext_resource type="Script" uid="uid://88jtdxjp53a3" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Idle/idle.gd" id="12_0fwr3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ugi6n"]
 
@@ -13,6 +19,7 @@
 
 [node name="Player" type="CharacterBody3D" unique_id=1216739437]
 script = ExtResource("1_rx582")
+sensitivity = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1351606978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -47,11 +54,32 @@ script = ExtResource("5_y6hyn")
 BODY = NodePath("../..")
 CAMERA_CONTROLLER = NodePath("../../CameraPosition/CameraController")
 MOUSE_CAPTURE_COMPONENT = NodePath("../MouseCaptureComponent")
-sensitivity = 0.1
-upperTiltLimit = 90
 metadata/_custom_type_script = "uid://b2xijy6y8gqkp"
 
 [node name="MouseCaptureComponent" type="Node" parent="Components" unique_id=68747126]
 script = ExtResource("6_y6hyn")
-mouseSensitivity = 0.3
 metadata/_custom_type_script = "uid://cmk3t07626wdj"
+
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=1163685731]
+script = ExtResource("7_75l7y")
+
+[node name="MovementStateMachine" type="Node" parent="PlayerStateMachine" unique_id=651542942]
+script = ExtResource("8_5o8lj")
+
+[node name="Moving" type="Node" parent="PlayerStateMachine/MovementStateMachine" unique_id=1188486466]
+script = ExtResource("9_i4twt")
+
+[node name="Grounded" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving" unique_id=9090763]
+script = ExtResource("10_q8fdp")
+
+[node name="Walking" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving/Grounded" unique_id=140809782]
+script = ExtResource("11_0yfgq")
+
+[node name="Sprinting" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving/Grounded" unique_id=1030549095]
+
+[node name="Jump" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving/Grounded" unique_id=577832567]
+
+[node name="Airborne" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving" unique_id=300637115]
+
+[node name="Idle" type="Node" parent="PlayerStateMachine/MovementStateMachine" unique_id=492914979]
+script = ExtResource("12_0fwr3")
