@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://b084da7vu4jh3"]
+
+[ext_resource type="Script" uid="uid://d175nuqrkofqd" path="res://Scripts/Components/input_component.gd" id="1_kkvp2"]
+[ext_resource type="Script" uid="uid://cl2yjc7fm4vyi" path="res://Scripts/Entities/Player/player.gd" id="1_rx582"]
+[ext_resource type="Script" uid="uid://bi704mqhfv6jk" path="res://Scripts/Components/movement_component.gd" id="2_4ffj5"]
+[ext_resource type="Script" uid="uid://c0rtbfn4ctgib" path="res://Scripts/Entities/Player/camera_controller.gd" id="2_fcpig"]
+[ext_resource type="Script" uid="uid://b2xijy6y8gqkp" path="res://Scripts/Components/camera_movement_component.gd" id="5_y6hyn"]
+[ext_resource type="Script" uid="uid://cmk3t07626wdj" path="res://Scripts/Components/mouse_capture_component.gd" id="6_y6hyn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ugi6n"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_60o14"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1216739437]
+script = ExtResource("1_rx582")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1351606978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ugi6n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1206116679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_60o14")
+
+[node name="CameraPosition" type="Node3D" parent="." unique_id=150806236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CameraController" type="Node3D" parent="CameraPosition" unique_id=1137359968]
+script = ExtResource("2_fcpig")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraController" unique_id=353959414]
+
+[node name="Components" type="Node" parent="." unique_id=38246343]
+
+[node name="InputComponent" type="Node" parent="Components" unique_id=1437150627]
+script = ExtResource("1_kkvp2")
+metadata/_custom_type_script = "uid://d175nuqrkofqd"
+
+[node name="MovementComponent" type="Node" parent="Components" unique_id=639852207 node_paths=PackedStringArray("BODY", "INPUT_COMPONENT")]
+script = ExtResource("2_4ffj5")
+BODY = NodePath("../..")
+INPUT_COMPONENT = NodePath("../InputComponent")
+metadata/_custom_type_script = "uid://bi704mqhfv6jk"
+
+[node name="CameraMovementComponent" type="Node" parent="Components" unique_id=197212145 node_paths=PackedStringArray("BODY", "CAMERA_CONTROLLER", "MOUSE_CAPTURE_COMPONENT")]
+script = ExtResource("5_y6hyn")
+BODY = NodePath("../..")
+CAMERA_CONTROLLER = NodePath("../../CameraPosition/CameraController")
+MOUSE_CAPTURE_COMPONENT = NodePath("../MouseCaptureComponent")
+sensitivity = 0.1
+upperTiltLimit = 90
+metadata/_custom_type_script = "uid://b2xijy6y8gqkp"
+
+[node name="MouseCaptureComponent" type="Node" parent="Components" unique_id=68747126]
+script = ExtResource("6_y6hyn")
+mouseSensitivity = 0.3
+metadata/_custom_type_script = "uid://cmk3t07626wdj"

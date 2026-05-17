@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://due6m7eo6o6tj"]
+
+[ext_resource type="PackedScene" uid="uid://dcfcxfqehbbky" path="res://Scenes/Objects/Test/box_test.tscn" id="1_h6rvd"]
+[ext_resource type="PackedScene" uid="uid://b084da7vu4jh3" path="res://Scenes/Entities/Player/player.tscn" id="2_fcrff"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h6rvd"]
+sky_top_color = Color(0.25067568, 0.6005876, 0.73048335, 1)
+sky_horizon_color = Color(0.7030817, 0.78280973, 0.8062836, 1)
+ground_horizon_color = Color(0.7030817, 0.78280973, 0.8062836, 1)
+
+[sub_resource type="Sky" id="Sky_fcrff"]
+sky_material = SubResource("ProceduralSkyMaterial_h6rvd")
+
+[sub_resource type="Environment" id="Environment_xdigk"]
+background_mode = 2
+sky = SubResource("Sky_fcrff")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h6rvd"]
+albedo_color = Color(0.427493, 0.42749307, 0.42749307, 1)
+
+[node name="TestLevel" type="Node3D" unique_id=484432459]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=990250455]
+environment = SubResource("Environment_xdigk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=580446577]
+transform = Transform3D(0.88147664, 0.35670286, -0.30945453, 1.3906534e-08, 0.6553079, 0.755362, 0.47222772, -0.6658339, 0.57763857, 0, 6.490046, 0)
+
+[node name="Player" parent="." unique_id=1216739437 instance=ExtResource("2_fcrff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7651086, 0)
+
+[node name="Enviroment" type="Node3D" parent="." unique_id=1981495753]
+
+[node name="Floor" type="CSGBox3D" parent="Enviroment" unique_id=706197129]
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_h6rvd")
+
+[node name="BoxTest" parent="Enviroment" unique_id=2111860182 instance=ExtResource("1_h6rvd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40535307, 1.3427353, -2.4751987)
+
+[node name="BoxTest2" parent="Enviroment" unique_id=1846533911 instance=ExtResource("1_h6rvd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19512057, 2.6552563, -3.0582314)
