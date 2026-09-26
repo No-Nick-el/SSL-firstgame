@@ -12,8 +12,12 @@ config_version=5
 
 config/name="ProjectSSL"
 run/main_scene="uid://due6m7eo6o6tj"
-config/features=PackedStringArray("4.6", "Mobile")
+config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="ProjectSSL"
 
 [input]
 
