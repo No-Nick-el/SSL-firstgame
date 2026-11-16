@@ -18,5 +18,5 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ready() -> void:
 	Input.mouse_mode = currentMouseMode
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	mouseInput = Vector2.ZERO

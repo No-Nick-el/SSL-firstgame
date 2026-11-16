@@ -13,16 +13,16 @@ class_name Player extends CharacterBody3D
 @export var airDeceleration:float = 0.001
 @export var jumpForce:float = 4.5
 @export_category("Camera Settings")
-@export var sensitivity:float = 0.05
+@export var sensitivity:float = 0.25
 @export_group("Camera Tilt")
 @export_range(-90, -60) var lowerTiltLimit:int = -90
 @export_range(60, 90) var upperTiltLimit:int = 90
-
-func _physics_process(delta: float) -> void:
-	
-	movement_component.movement_update(delta, speed, acceleration, deceleration, airAcceleration,
-	airDeceleration, jumpForce)
-	
-	camera_movement_component.update_camera_rotation(delta, sensitivity, lowerTiltLimit, upperTiltLimit)
-	
-	move_and_slide()
+#
+#func _physics_process(delta: float) -> void:
+	#
+	#movement_component.movement_update(delta, speed, acceleration, deceleration, airAcceleration,
+	#airDeceleration, jumpForce)
+	#
+	#camera_movement_component.update_camera_rotation(delta, sensitivity, lowerTiltLimit, upperTiltLimit)
+	#
+	#move_and_slide()

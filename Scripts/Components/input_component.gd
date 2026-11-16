@@ -7,9 +7,9 @@ var sprintPressed:bool = false
 var usePressed:bool = false
 var exitPressed:bool = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	inputDirection = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	jumpJustPressed = Input.is_action_just_pressed("jump")
+	jumpJustPressed = Input.is_action_pressed("jump")
 	crouchPressed = Input.is_action_pressed("crouch")
 	sprintPressed = Input.is_action_pressed("sprint")
 	usePressed = Input.is_action_pressed("use")

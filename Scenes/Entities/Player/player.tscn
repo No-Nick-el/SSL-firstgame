@@ -2,16 +2,15 @@
 
 [ext_resource type="Script" uid="uid://d175nuqrkofqd" path="res://Scripts/Components/input_component.gd" id="1_kkvp2"]
 [ext_resource type="Script" uid="uid://cl2yjc7fm4vyi" path="res://Scripts/Entities/Player/player.gd" id="1_rx582"]
+[ext_resource type="Script" uid="uid://d3trfjlyxc5r1" path="res://Scripts/Entities/Player/cameraController.gd" id="2_0yfgq"]
 [ext_resource type="Script" uid="uid://bi704mqhfv6jk" path="res://Scripts/Components/movement_component.gd" id="2_4ffj5"]
-[ext_resource type="Script" uid="uid://c0rtbfn4ctgib" path="res://Scripts/Entities/Player/camera_controller.gd" id="2_fcpig"]
 [ext_resource type="Script" uid="uid://b2xijy6y8gqkp" path="res://Scripts/Components/camera_movement_component.gd" id="5_y6hyn"]
 [ext_resource type="Script" uid="uid://cmk3t07626wdj" path="res://Scripts/Components/mouse_capture_component.gd" id="6_y6hyn"]
-[ext_resource type="Script" uid="uid://dh2xregh2rxqo" path="res://Scripts/StateMachine/PlayerStateMachine/player_state_machine.gd" id="7_75l7y"]
-[ext_resource type="Script" uid="uid://8vvjh3ieyo7o" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/movement_state_machine.gd" id="8_5o8lj"]
-[ext_resource type="Script" uid="uid://5hb20klwvs4r" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Moving/moving.gd" id="9_i4twt"]
-[ext_resource type="Script" uid="uid://cfbfhg47401l5" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Moving/Grounded/grounded.gd" id="10_q8fdp"]
-[ext_resource type="Script" uid="uid://dulq8ku4v3585" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Moving/Grounded/Walking/walking.gd" id="11_0yfgq"]
-[ext_resource type="Script" uid="uid://88jtdxjp53a3" path="res://Scripts/StateMachine/PlayerStateMachine/MovementStateMachine/Idle/idle.gd" id="12_0fwr3"]
+[ext_resource type="Script" uid="uid://c8asyd2rgjeis" path="res://Scripts/StateMachine/PlayerStateMachine/player_state_machine.gd" id="7_0yfgq"]
+[ext_resource type="Script" uid="uid://deh3041n8twy1" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/alive.gd" id="8_0yfgq"]
+[ext_resource type="Script" uid="uid://jpu4npcqsxjr" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/Grounded/Idle/idle.gd" id="8_i4twt"]
+[ext_resource type="Script" uid="uid://yjayp6ssbded" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/Grounded/grounded.gd" id="9_0fwr3"]
+[ext_resource type="Script" uid="uid://dtf3o8u77m77u" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/Grounded/Walking/walking.gd" id="9_q8fdp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ugi6n"]
 
@@ -19,7 +18,6 @@
 
 [node name="Player" type="CharacterBody3D" unique_id=1216739437]
 script = ExtResource("1_rx582")
-sensitivity = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1351606978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -33,7 +31,7 @@ mesh = SubResource("CapsuleMesh_60o14")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="CameraController" type="Node3D" parent="CameraPosition" unique_id=1137359968]
-script = ExtResource("2_fcpig")
+script = ExtResource("2_0yfgq")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraController" unique_id=353959414]
 
@@ -60,26 +58,24 @@ metadata/_custom_type_script = "uid://b2xijy6y8gqkp"
 script = ExtResource("6_y6hyn")
 metadata/_custom_type_script = "uid://cmk3t07626wdj"
 
-[node name="PlayerStateMachine" type="Node" parent="." unique_id=1163685731]
-script = ExtResource("7_75l7y")
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=519698023 node_paths=PackedStringArray("initialState")]
+script = ExtResource("7_0yfgq")
+initialState = NodePath("Alive")
+metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
 
-[node name="MovementStateMachine" type="Node" parent="PlayerStateMachine" unique_id=651542942]
-script = ExtResource("8_5o8lj")
+[node name="Alive" type="Node" parent="PlayerStateMachine" unique_id=960898406 node_paths=PackedStringArray("initialState")]
+script = ExtResource("8_0yfgq")
+initialState = NodePath("Grounded")
+metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
 
-[node name="Moving" type="Node" parent="PlayerStateMachine/MovementStateMachine" unique_id=1188486466]
-script = ExtResource("9_i4twt")
+[node name="Grounded" type="Node" parent="PlayerStateMachine/Alive" unique_id=318991815 node_paths=PackedStringArray("initialState")]
+script = ExtResource("9_0fwr3")
+initialState = NodePath("Idle")
+metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
 
-[node name="Grounded" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving" unique_id=9090763]
-script = ExtResource("10_q8fdp")
+[node name="Idle" type="Node" parent="PlayerStateMachine/Alive/Grounded" unique_id=522178748 node_paths=PackedStringArray("player")]
+script = ExtResource("8_i4twt")
+player = NodePath("../../../..")
 
-[node name="Walking" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving/Grounded" unique_id=140809782]
-script = ExtResource("11_0yfgq")
-
-[node name="Sprinting" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving/Grounded" unique_id=1030549095]
-
-[node name="Jump" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving/Grounded" unique_id=577832567]
-
-[node name="Airborne" type="Node" parent="PlayerStateMachine/MovementStateMachine/Moving" unique_id=300637115]
-
-[node name="Idle" type="Node" parent="PlayerStateMachine/MovementStateMachine" unique_id=492914979]
-script = ExtResource("12_0fwr3")
+[node name="Walking" type="Node" parent="PlayerStateMachine/Alive/Grounded" unique_id=2086931577]
+script = ExtResource("9_q8fdp")
