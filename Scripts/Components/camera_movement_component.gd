@@ -11,12 +11,12 @@ var rotation := Vector2.ZERO
 var playerRotation:Vector3
 var cameraRotation:Vector3
 
-func update_camera_rotation(event, sensitivity:float, lowerTiltLimit:float, upperTiltLimit:float) -> void:
+func update_camera_rotation(delta, sensitivity:float, lowerTiltLimit:float, upperTiltLimit:float) -> void:
 	if !(BODY and CAMERA_CONTROLLER and MOUSE_CAPTURE_COMPONENT):
 		return
 	
-	rotation.x += MOUSE_CAPTURE_COMPONENT.mouseInput.y * sensitivity
-	rotation.y += MOUSE_CAPTURE_COMPONENT.mouseInput.x * sensitivity
+	rotation.x += MOUSE_CAPTURE_COMPONENT.mouseInput.y * delta * sensitivity
+	rotation.y += MOUSE_CAPTURE_COMPONENT.mouseInput.x * delta * sensitivity
 	rotation.x = clamp(rotation.x, deg_to_rad(lowerTiltLimit), deg_to_rad(upperTiltLimit))
 	
 	playerRotation = Vector3(0, rotation.y, 0)

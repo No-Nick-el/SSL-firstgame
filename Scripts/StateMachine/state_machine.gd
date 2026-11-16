@@ -20,11 +20,9 @@ func register_states(node:Node):
 			child.transition.connect(on_child_transition)
 			register_states(child)
 
-
 func _process(delta: float) -> void:
 	if currentState:
 		currentState.update(delta)
-
 
 func _physics_process(delta: float) -> void:
 	if currentState:
