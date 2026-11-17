@@ -1,4 +1,11 @@
 extends StateMachine
 
-func physics_update(_delta:float) -> void:
-	super.physics_update(_delta)
+@export var player:Player
+@export var input:InputComponent
+
+func enter() -> void:
+	print("ground")
+
+func physics_update(delta:float) -> void:
+	if !player.is_on_floor():
+		transition.emit("Airborn")

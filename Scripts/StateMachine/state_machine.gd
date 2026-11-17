@@ -32,7 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if currentState:
 		currentState.handle_update(event)
 
-func on_child_transition(state, new_state_name):
+func on_child_transition(new_state_name):
 	var newState = states.get(new_state_name.to_lower())
 	if !newState or newState == currentState:
 		return

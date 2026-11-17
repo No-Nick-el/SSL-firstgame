@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cl2yjc7fm4vyi" path="res://Scripts/Entities/Player/player.gd" id="1_rx582"]
 [ext_resource type="Script" uid="uid://d3trfjlyxc5r1" path="res://Scripts/Entities/Player/cameraController.gd" id="2_0yfgq"]
+[ext_resource type="Script" uid="uid://d175nuqrkofqd" path="res://Scripts/Components/input_component.gd" id="3_5o8lj"]
+[ext_resource type="Script" uid="uid://doe8xiufqtx3n" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/Airborn/airborn.gd" id="6_q8fdp"]
+[ext_resource type="Script" uid="uid://cxfo84o6eybua" path="res://Scripts/StateMachine/state.gd" id="7_0fwr3"]
 [ext_resource type="Script" uid="uid://c8asyd2rgjeis" path="res://Scripts/StateMachine/PlayerStateMachine/player_state_machine.gd" id="7_0yfgq"]
 [ext_resource type="Script" uid="uid://deh3041n8twy1" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/alive.gd" id="8_0yfgq"]
 [ext_resource type="Script" uid="uid://jpu4npcqsxjr" path="res://Scripts/StateMachine/PlayerStateMachine/Alive/Grounded/Idle/idle.gd" id="8_i4twt"]
@@ -33,6 +36,10 @@ script = ExtResource("2_0yfgq")
 
 [node name="Components" type="Node" parent="." unique_id=38246343]
 
+[node name="InputComponent" type="Node" parent="Components" unique_id=1872429966]
+script = ExtResource("3_5o8lj")
+metadata/_custom_type_script = "uid://d175nuqrkofqd"
+
 [node name="PlayerStateMachine" type="Node" parent="." unique_id=519698023 node_paths=PackedStringArray("initialState")]
 script = ExtResource("7_0yfgq")
 initialState = NodePath("Alive")
@@ -40,18 +47,15 @@ metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
 
 [node name="Alive" type="Node" parent="PlayerStateMachine" unique_id=960898406 node_paths=PackedStringArray("player", "cameraController", "initialState")]
 script = ExtResource("8_0yfgq")
-debug = null
 player = NodePath("../..")
 cameraController = NodePath("../../CameraPosition/CameraController")
-currentMouseMode = null
-mouseSensitivity = null
-tiltLowerLimit = null
-tiltUpperLimit = null
 initialState = NodePath("Grounded")
 metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
 
-[node name="Grounded" type="Node" parent="PlayerStateMachine/Alive" unique_id=318991815 node_paths=PackedStringArray("initialState")]
+[node name="Grounded" type="Node" parent="PlayerStateMachine/Alive" unique_id=318991815 node_paths=PackedStringArray("player", "input", "initialState")]
 script = ExtResource("9_0fwr3")
+player = NodePath("../../..")
+input = NodePath("../../../Components/InputComponent")
 initialState = NodePath("Idle")
 metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
 
@@ -61,3 +65,13 @@ player = NodePath("../../../..")
 
 [node name="Walking" type="Node" parent="PlayerStateMachine/Alive/Grounded" unique_id=2086931577]
 script = ExtResource("9_q8fdp")
+
+[node name="Airborn" type="Node" parent="PlayerStateMachine/Alive" unique_id=1886474318 node_paths=PackedStringArray("player", "initialState")]
+script = ExtResource("6_q8fdp")
+player = NodePath("../../..")
+initialState = NodePath("Jump")
+metadata/_custom_type_script = "uid://bxhqjmqtjbio1"
+
+[node name="Jump" type="Node" parent="PlayerStateMachine/Alive/Airborn" unique_id=1717598621]
+script = ExtResource("7_0fwr3")
+metadata/_custom_type_script = "uid://cxfo84o6eybua"
